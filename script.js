@@ -3,55 +3,75 @@ const lyricDisplay = document.getElementById('lyricDisplay');
 const manualArea = document.getElementById('manualInputArea');
 const toggleBtn = document.getElementById('toggleManual');
 const saveBtn = document.getElementById('saveManual');
+const manualText = document.getElementById('manualText');
 let lyrics = [];
 
-// Handle Audio Upload
+// --- 1. Audio Loading ---
 document.getElementById('audioInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
-        audioPlayer.src = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file);
+        audioPlayer.src = url;
+        lyricDisplay.innerText = "Audio loaded. Now add lyrics.";
     }
 });
 
-// Handle File Lyric Upload
+// --- 2. Lyric Loading (File) ---
 document.getElementById('lyricInput').addEventListener('change', function(e) {
     const reader = new FileReader();
-    reader.onload = (event) => parseLyrics(event.target.result);
+    reader.onload = (event) => {
+        parseLyrics(event.target.result);
+        lyricDisplay.innerText = "Lyrics loaded from file!";
+    };
     reader.readAsText(e.target.files[0]);
 });
 
-// Toggle Manual Entry Mode
+// --- 3. Manual Entry Logic ---
 toggleBtn.addEventListener('click', () => {
     manualArea.style.display = manualArea.style.display === 'none' ? 'block' : 'none';
 });
 
-// Save Manual Lyrics
 saveBtn.addEventListener('click', () => {
-    const text = document.getElementById('manualText').value;
-    parseLyrics(text);
-    manualArea.style.display = 'none';
-    alert("Lyrics synced!");
+    const textValue = manualText.value.trim();
+    if (!textValue) {
+        alert("Please type some lyrics first.");
+        return;
+    }
+
+    parseLyrics(textValue);
+
+    if (lyrics.length > 0) {
+        manualArea.style.display = 'none';
+        lyricDisplay.innerText = "Manual lyrics synced!";
+    } else {
+        alert("Error: No timestamps found. Use [00:00.00] format.");
+    }
 });
 
-// The Parser (Supports [mm:ss.xx] format)
+// --- 4. The Parser ---
 function parseLyrics(text) {
     const lines = text.split('\n');
-    lyrics = lines.map(line => {
-        const match = line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
+    lyrics = []; 
+
+    lines.forEach(line => {
+        const match = line.match(/\[(\d+):(\d+\.?\d*)\](.*)/);
         if (match) {
-            const time = parseInt(match[1]) * 60 + parseFloat(match[2]);
-            return { time, text: match[3].trim() };
+            const minutes = parseInt(match[1]);
+            const seconds = parseFloat(match[2]);
+            const time = (minutes * 60) + seconds;
+            const lyricText = match[3].trim();
+            lyrics.push({ time, text: lyricText });
         }
-        return null;
-    }).filter(l => l !== null);
+    });
     
-    // Sort by time just in case they were typed out of order
     lyrics.sort((a, b) => a.time - b.time);
 }
 
-// Playback Sync
+// --- 5. Playback Synchronization ---
 audioPlayer.addEventListener('timeupdate', () => {
     const currentTime = audioPlayer.currentTime;
+    
+    // Find the latest lyric that is less than or equal to current time
     const activeLyric = lyrics.reduce((prev, curr) => {
         return (curr.time <= currentTime) ? curr : prev;
     }, { text: "..." });
