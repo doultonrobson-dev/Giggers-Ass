@@ -1,23 +1,39 @@
 const audioPlayer = document.getElementById('audioPlayer');
 const lyricDisplay = document.getElementById('lyricDisplay');
+const manualArea = document.getElementById('manualInputArea');
+const toggleBtn = document.getElementById('toggleManual');
+const saveBtn = document.getElementById('saveManual');
 let lyrics = [];
 
-// 1. Load Audio
+// Handle Audio Upload
 document.getElementById('audioInput').addEventListener('change', function(e) {
-    const reader = new FileReader();
-    reader.onload = (event) => { audioPlayer.src = event.target.result; };
-    reader.readAsDataURL(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+        audioPlayer.src = URL.createObjectURL(file);
+    }
 });
 
-// 2. Load and Parse Lyrics
+// Handle File Lyric Upload
 document.getElementById('lyricInput').addEventListener('change', function(e) {
     const reader = new FileReader();
-    reader.onload = (event) => {
-        parseLyrics(event.target.result);
-    };
+    reader.onload = (event) => parseLyrics(event.target.result);
     reader.readAsText(e.target.files[0]);
 });
 
+// Toggle Manual Entry Mode
+toggleBtn.addEventListener('click', () => {
+    manualArea.style.display = manualArea.style.display === 'none' ? 'block' : 'none';
+});
+
+// Save Manual Lyrics
+saveBtn.addEventListener('click', () => {
+    const text = document.getElementById('manualText').value;
+    parseLyrics(text);
+    manualArea.style.display = 'none';
+    alert("Lyrics synced!");
+});
+
+// The Parser (Supports [mm:ss.xx] format)
 function parseLyrics(text) {
     const lines = text.split('\n');
     lyrics = lines.map(line => {
@@ -28,14 +44,17 @@ function parseLyrics(text) {
         }
         return null;
     }).filter(l => l !== null);
+    
+    // Sort by time just in case they were typed out of order
+    lyrics.sort((a, b) => a.time - b.time);
 }
 
-// 3. Sync Logic
+// Playback Sync
 audioPlayer.addEventListener('timeupdate', () => {
     const currentTime = audioPlayer.currentTime;
     const activeLyric = lyrics.reduce((prev, curr) => {
         return (curr.time <= currentTime) ? curr : prev;
-    }, { text: "" });
+    }, { text: "..." });
     
     lyricDisplay.innerText = activeLyric.text;
 });
