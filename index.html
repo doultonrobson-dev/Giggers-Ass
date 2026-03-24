@@ -13,31 +13,31 @@
         <div class="upload-section">
             <div class="control-group">
                 <label>1. Select Audio (MP3)</label>
-                <input type="file" id="audioInput" accept="audio/mpeg, audio/wav, audio/ogg, .mp3">
+                <input type="file" id="audioInput" accept="audio/mpeg, audio/mp3, .mp3">
             </div>
 
             <div class="control-group">
                 <label>2. Add Lyrics</label>
                 <div class="button-row">
                     <input type="file" id="lyricInput" accept=".lrc,.txt" style="display:none;">
-                    <button type="button" onclick="document.getElementById('lyricInput').click()">📁 Upload .LRC</button>
-                    <button type="button" id="toggleManual">✍️ Type Manually</button>
+                    <button type="button" onclick="document.getElementById('lyricInput').click()" style="background: #4a90e2;">📁 Upload .LRC File</button>
+                    <button type="button" id="toggleManual" style="background: #6c757d;">✍️ Type Manually</button>
                 </div>
             </div>
         </div>
 
         <div id="manualInputArea" style="display:none;">
             <p style="font-size: 0.8rem; color: #ffcc00; margin-bottom: 5px;">
-                Use format: [mm:ss.xx] Lyric Text
+                Required format: [mm:ss.xx] Lyric Text
             </p>
-            <textarea id="manualText" placeholder="[00:01.00] First Line&#10;[00:05.50] Second Line"></textarea>
-            <button type="button" id="saveManual" style="background: #28a745; margin-top: 10px;">Save & Sync Lyrics</button>
+            <textarea id="manualText" placeholder="[00:01.00] Song starts...&#10;[00:05.50] First verse here"></textarea>
+            <button type="button" id="saveManual" style="background: #28a745; margin-top: 10px; width: 100%;">Save & Sync Lyrics</button>
         </div>
 
         <audio id="audioPlayer" controls></audio>
 
         <div id="displayWrapper">
-            <p id="lyricDisplay">Waiting for files...</p>
+            <p id="lyricDisplay">Ready for your track...</p>
         </div>
     </div>
     <script src="script.js"></script>
