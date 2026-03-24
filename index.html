@@ -2,18 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Web Lyric Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncLyric Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="player-container">
-        <input type="file" id="audioInput" accept="audio/mp3">
-        <input type="file" id="lyricInput" accept=".lrc,.txt">
+    <div class="player-card">
+        <h2>🎵 Audio & Lyric Player</h2>
         
+        <div class="upload-section">
+            <div class="control-group">
+                <label>1. Select Audio (MP3)</label>
+                <input type="file" id="audioInput" accept="audio/mp3">
+            </div>
+
+            <div class="control-group">
+                <label>2. Add Lyrics</label>
+                <div class="button-row">
+                    <input type="file" id="lyricInput" accept=".lrc,.txt" style="display:none;">
+                    <button onclick="document.getElementById('lyricInput').click()">📁 Upload .LRC</button>
+                    <button id="toggleManual">✍️ Type Manually</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="manualInputArea" style="display:none;">
+            <textarea id="manualText" placeholder="Format: [00:12.30] Lyric text here..."></textarea>
+            <button id="saveManual">Save & Sync Lyrics</button>
+        </div>
+
         <audio id="audioPlayer" controls></audio>
-        
-        <div id="lyricContainer">
-            <p id="lyricDisplay">Upload your files to begin...</p>
+
+        <div id="displayWrapper">
+            <p id="lyricDisplay">Ready to sync...</p>
         </div>
     </div>
     <script src="script.js"></script>
