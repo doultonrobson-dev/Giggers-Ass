@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Lyric Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="player-container">
+        <input type="file" id="audioInput" accept="audio/mp3">
+        <input type="file" id="lyricInput" accept=".lrc,.txt">
+        
+        <audio id="audioPlayer" controls></audio>
+        
+        <div id="lyricContainer">
+            <p id="lyricDisplay">Upload your files to begin...</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
