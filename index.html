@@ -10,23 +10,22 @@
     <div class="stage-container">
         <div class="control-deck">
             <div class="input-box">
-                <label>LOAD MP3</label>
+                <label>1. LOAD AUDIO</label>
                 <input type="file" id="audioInput" accept="audio/mpeg, .mp3">
             </div>
             <div class="input-box">
-                <label>LOAD LYRICS</label>
+                <label>2. FIND LYRICS</label>
                 <div class="btn-group">
-                    <input type="file" id="lyricInput" accept=".lrc,.txt" style="display:none">
-                    <button onclick="document.getElementById('lyricInput').click()">📁 Open File</button>
-                    <button id="toggleManual">✍️ Type</button>
+                    <button id="googleSearch" style="background: #4285F4;">🔍 Search Google</button>
+                    <button id="toggleManual" style="background: #34A853;">✍️ Paste/Type</button>
                 </div>
             </div>
         </div>
 
         <div class="lyric-monitor">
-            <h1 id="trackName">Ready for Track...</h1>
+            <h1 id="trackName">SELECT A TRACK</h1>
             <div id="displayWrapper">
-                <p id="lyricDisplay">-- Select Files to Start --</p>
+                <p id="lyricDisplay">WAITING...</p>
             </div>
         </div>
 
@@ -34,8 +33,13 @@
             <audio id="audioPlayer" controls></audio>
             
             <div id="manualInputArea" class="modal" style="display:none;">
-                <textarea id="manualText" placeholder="[00:00.00] Song Start..."></textarea>
-                <button id="saveManual">SYNC LYRICS</button>
+                <h3>Paste Lyrics with Timestamps</h3>
+                <p style="font-size: 0.8rem; color: #ffcc00;">Format: [00:12.00] Lyric line</p>
+                <textarea id="manualText" placeholder="[00:01.00] Intro..."></textarea>
+                <div class="modal-buttons">
+                    <button id="saveManual">SYNC TO TRACK</button>
+                    <button onclick="document.getElementById('manualInputArea').style.display='none'" style="background:#555;">CANCEL</button>
+                </div>
             </div>
         </div>
     </div>
