@@ -1,23 +1,44 @@
-<div class="main-container">
-    <div class="setlist-sidebar">
-        <h3>Setlist</h3>
-        <ul id="songList">
-            <li onclick="loadGigSong('song1.mp3', 'song1.lrc')">1. Song Title One</li>
-            <li onclick="loadGigSong('song2.mp3', 'song2.lrc')">2. Song Title Two</li>
-        </ul>
-        <hr>
-        <p style="font-size: 0.7rem;">Click a song to load it instantly.</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gig-Sync Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stage-container">
+        <div class="control-deck">
+            <div class="input-box">
+                <label>LOAD MP3</label>
+                <input type="file" id="audioInput" accept="audio/mpeg, .mp3">
+            </div>
+            <div class="input-box">
+                <label>LOAD LYRICS</label>
+                <div class="btn-group">
+                    <input type="file" id="lyricInput" accept=".lrc,.txt" style="display:none">
+                    <button onclick="document.getElementById('lyricInput').click()">📁 Open File</button>
+                    <button id="toggleManual">✍️ Type</button>
+                </div>
+            </div>
+        </div>
 
-    <div class="player-card">
-        <h2 id="currentTrackTitle">🎤 Live Performer Mode</h2>
-        <audio id="audioPlayer" controls></audio>
-        <div id="displayWrapper">
-            <p id="lyricDisplay">Select a song to begin...</p>
+        <div class="lyric-monitor">
+            <h1 id="trackName">Ready for Track...</h1>
+            <div id="displayWrapper">
+                <p id="lyricDisplay">-- Select Files to Start --</p>
+            </div>
         </div>
-        
-        <div class="backup-controls">
-            <button onclick="document.getElementById('manualInputArea').style.display='block'">Manual Backup</button>
+
+        <div class="transport-bar">
+            <audio id="audioPlayer" controls></audio>
+            
+            <div id="manualInputArea" class="modal" style="display:none;">
+                <textarea id="manualText" placeholder="[00:00.00] Song Start..."></textarea>
+                <button id="saveManual">SYNC LYRICS</button>
+            </div>
         </div>
     </div>
-</div>
+    <script src="script.js"></script>
+</body>
+</html>
