@@ -1,79 +1,47 @@
 :root {
-    --bg: #000000;
-    --accent: #ffcc00; /* High visibility Gold */
+    --bg: #000;
+    --accent: #ffcc00;
     --surface: #1a1a1a;
 }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: white;
-    font-family: 'Arial Black', sans-serif;
+body { margin: 0; background: var(--bg); color: #fff; font-family: 'Arial Black', sans-serif; overflow: hidden; }
+
+.stage-container { display: flex; flex-direction: column; height: 100vh; }
+
+.control-deck { 
+    background: var(--surface); 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 15px; 
+    border-bottom: 2px solid var(--accent);
 }
 
-.stage-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+.input-box { display: flex; flex-direction: column; gap: 8px; }
+label { font-size: 0.7rem; color: var(--accent); }
 
-/* Control Deck - Top 20% */
-.control-deck {
-    background: var(--surface);
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    border-bottom: 3px solid var(--accent);
-}
+.btn-group { display: flex; gap: 10px; }
+button { border: none; padding: 10px 15px; color: white; font-weight: bold; border-radius: 5px; cursor: pointer; }
 
-.input-box { display: flex; flex-direction: column; gap: 5px; }
-label { font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; }
-
-/* Lyric Monitor - Middle 60% */
-.lyric-monitor {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.lyric-monitor { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
     text-align: center;
-    padding: 20px;
 }
 
-#trackName { font-size: 1rem; color: #666; margin-bottom: 20px; }
+#trackName { font-size: 0.9rem; letter-spacing: 2px; color: #555; margin-bottom: 10px; }
+#lyricDisplay { font-size: 4.5rem; line-height: 1.1; text-transform: uppercase; }
 
-#displayWrapper {
-    width: 100%;
-    max-width: 900px;
-    min-height: 200px;
-}
+.transport-bar { background: var(--surface); padding: 15px; border-top: 1px solid #333; }
+audio { width: 100%; filter: invert(1); height: 50px; }
 
-#lyricDisplay {
-    font-size: 4rem; /* HUGE for stage visibility */
-    line-height: 1.2;
-    transition: all 0.2s ease;
-}
-
-/* Transport Bar - Bottom 20% */
-.transport-bar {
-    background: var(--surface);
-    padding: 20px;
-    border-top: 2px solid #333;
-}
-
-audio { width: 100%; filter: invert(1); height: 60px; }
-
-/* Modal for Manual Entry */
+/* The Modal for Pasting */
 .modal {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: #222;
-    padding: 20px;
-    border: 3px solid var(--accent);
-    z-index: 100;
-    width: 80%;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #222; padding: 25px; border: 3px solid var(--accent); width: 85%; z-index: 1000;
 }
-
-textarea { width: 100%; height: 200px; background: #000; color: #fff; font-size: 1.2rem; }
-button { background: var(--accent); border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; }
+textarea { width: 100%; height: 250px; background: #000; color: #fff; font-family: monospace; padding: 10px; box-sizing: border-box; }
+.modal-buttons { display: flex; gap: 10px; margin-top: 15px; }
