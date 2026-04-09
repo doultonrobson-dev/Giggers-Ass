@@ -1,45 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncLyric Web Player</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div class="main-container">
+    <div class="setlist-sidebar">
+        <h3>Setlist</h3>
+        <ul id="songList">
+            <li onclick="loadGigSong('song1.mp3', 'song1.lrc')">1. Song Title One</li>
+            <li onclick="loadGigSong('song2.mp3', 'song2.lrc')">2. Song Title Two</li>
+        </ul>
+        <hr>
+        <p style="font-size: 0.7rem;">Click a song to load it instantly.</p>
+    </div>
+
     <div class="player-card">
-        <h2>🎵 Audio & Lyric Player</h2>
-        
-        <div class="upload-section">
-            <div class="control-group">
-                <label>1. Select Audio (MP3)</label>
-                <input type="file" id="audioInput" accept="audio/mpeg, audio/mp3, .mp3">
-            </div>
-
-            <div class="control-group">
-                <label>2. Add Lyrics</label>
-                <div class="button-row">
-                    <input type="file" id="lyricInput" accept=".lrc,.txt" style="display:none;">
-                    <button type="button" onclick="document.getElementById('lyricInput').click()" style="background: #4a90e2;">📁 Upload .LRC File</button>
-                    <button type="button" id="toggleManual" style="background: #6c757d;">✍️ Type Manually</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="manualInputArea" style="display:none;">
-            <p style="font-size: 0.8rem; color: #ffcc00; margin-bottom: 5px;">
-                Required format: [mm:ss.xx] Lyric Text
-            </p>
-            <textarea id="manualText" placeholder="[00:01.00] Song starts...&#10;[00:05.50] First verse here"></textarea>
-            <button type="button" id="saveManual" style="background: #28a745; margin-top: 10px; width: 100%;">Save & Sync Lyrics</button>
-        </div>
-
+        <h2 id="currentTrackTitle">🎤 Live Performer Mode</h2>
         <audio id="audioPlayer" controls></audio>
-
         <div id="displayWrapper">
-            <p id="lyricDisplay">Ready for your track...</p>
+            <p id="lyricDisplay">Select a song to begin...</p>
+        </div>
+        
+        <div class="backup-controls">
+            <button onclick="document.getElementById('manualInputArea').style.display='block'">Manual Backup</button>
         </div>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
